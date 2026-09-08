@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Chatting App</h1>
+    <form id="form" action="">
+        <label for="message">Message:</label>
+        <input type="text" name="message" id="input">
+        <button id="sendBtn">Send</button>
+        <button id="" class="toggleBtn">Disconnect</button>
+    </form>
+
+    <ul id="messages"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const input=document.querySelector('#input');
+        const btn=document.querySelector("#sendBtn");
+        const ul=document.querySelector("#messages");
+        const toggleBtn=document.querySelector(".toggleBtn")
+
+        btn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            if(input.value.length){
+                socket.emit('message',input.value.trim())
+            }else{
+                alert("PLease Write Something!")
+            }
+            input.value='';
+        })
+
+        toggleBtn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            if(socket.connected){
+                toggleBtn.innerText="Connect";
+                socket.disconnect();
+                return ;
+            }else{
+                socket.connect()
+                toggleBtn.innerText="Disconnect"
+                return;
+            }
+        });
+
+        const socket=io();
+        
+        socket.on('message',(msg)=>{
+            const li=document.createElement('li');
+            li.innerText="Unknown\n"+msg; 
+            ul.appendChild(li);
+        })
+    </script>
+</body>
+</html>

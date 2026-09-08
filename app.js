@@ -1,26 +1,29 @@
-const express=require("express");
-const {createServer}=require("node:http")
-const app=express();
-const port=5000;
-const {Server}=require("socket.io");
+const express = require("express");
+const { createServer } = require("node:http");
+const { Server } = require("socket.io");
+const app = express();
+const port = 5000;
+const server = createServer(app);
+const io = new Server(server);
 
-const server=createServer(app);
-const io=new Server(server);
-
+app.set("view engine", "ejs");
 app.use(express.static("public"));
 
-app.get("/",(req,res)=>{
-    return res.sendFile('index.html');
-})
+app.get("/", (req, res) => {
+    res.render("index");
+});
 
-io.on('connection',(socket)=>{
-    console.log("Web Socket Connection Formed with Socket ID:"+socket.id)
-    socket.on('message',(msg)=>{
+io.on("connection", (socket) => {
+    socket.on("message", (msg) => {
         console.log(msg);
-        io.emit(msg)
+        io.emit("message", msg);
     });
-})
 
-server.listen(port,()=>{
+    socket.on('disconnect',(socket )=>{
+        console.log("Disconnedted Successfully");
+    })
+});
+
+server.listen(port, () => {
     console.log("Server is Listening...");
 });
