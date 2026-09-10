@@ -26,7 +26,7 @@ Express.js Application
    │
    ▼
 Route / Handler
-   │
+   │ 
    ▼
 HTTP Response
    │
