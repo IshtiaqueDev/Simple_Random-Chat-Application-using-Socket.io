@@ -1,6 +1,6 @@
 # ⚡ Node.js Real-Time Communication
 
-A modern backend project built with **Node.js, Express.js, and Socket.IO** to understand and implement **HTTP request/response architecture alongside real-time, bidirectional communication**.
+A modern backend project built with **Node.js, Express.js, and Socket.IO** to understand and implement **HTTP request/response architect alongside real-time, bidirectional communication**.
 
 This project focuses on understanding how a Node.js HTTP server works underneath Express and how Socket.IO uses that server to establish real-time communication between clients and the backend.
 
